@@ -48,7 +48,17 @@ namespace ExamenFinal
             string lineaExpediente = $"{codigoTicket} |  {nombre} | {dni} | {direccion} | {descripcion} | {fechaRegistro}";
 
             try
+            {
+                File.AppendAllText(RutaArchivo, lineaExpediente + Environment.NewLine);
 
+                MessageBox.Show($"Expediente registrado con éxito! \n\n Código asignado : {codigoTicket}", "Registro Exitoso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                this.Close();
+            }
+            catch
+            {
+                MessageBox.Show("Ocurrio un error al guardar el archivo : " + ex.Message, "Error de Persistencia", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
     }
 }

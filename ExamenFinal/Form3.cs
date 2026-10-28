@@ -7,13 +7,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.IO;
 
 namespace ExamenFinal
 {
     public partial class FormRegistro : System.Windows.Forms.Form
 
     {
-        private const string RutaArchivo = "expediente_txt";
+        private const string RutaArchivo = "expediente_olivos.txt";
         public FormRegistro()
         {
             InitializeComponent();
@@ -45,7 +46,7 @@ namespace ExamenFinal
 
             string fechaRegistro = DateTime.Now.ToString("yyyy-MM--dd  HH:mm");
 
-            string lineaExpediente = $"{codigoTicket} |  {nombre} | {dni} | {direccion} | {descripcion} | {fechaRegistro}";
+            string lineaExpediente = $"{codigoTicket} |  {nombre} | {dni} | {tipoTramite} | {direccion} | {descripcion} | {fechaRegistro}";
 
             try
             {
@@ -55,7 +56,7 @@ namespace ExamenFinal
 
                 this.Close();
             }
-            catch
+            catch (Exception ex)
             {
                 MessageBox.Show("Ocurrio un error al guardar el archivo : " + ex.Message, "Error de Persistencia", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }

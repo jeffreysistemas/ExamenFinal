@@ -64,16 +64,7 @@ namespace ExamenFinal
 
         private void button2_Click(object sender, EventArgs e)
         {
-            DialogResult resultado = MessageBox.Show("Estas seguro de cerrar esta pestaña ?", "Confirmar cierre de Ventana", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-
-            if (resultado == DialogResult.Yes)
-            {
-                FormDashboard FormRegistro = new FormDashboard();
-
-                FormRegistro.Show();
-
-                this .Close();  
-            }
+           this.Close();
         }
     }
 }

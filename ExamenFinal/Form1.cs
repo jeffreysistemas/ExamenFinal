@@ -15,7 +15,7 @@ namespace ExamenFinal
     {
         public Form1()
         {
-            InitializeComponent();
+            InitializeComponent();  
         }
 
         private void btnLogin_Click(object sender, EventArgs e)
@@ -27,12 +27,8 @@ namespace ExamenFinal
             {
                 MessageBox.Show("¡ Acceso correcto ! Bienvenido al sistema.");
 
-                FormDashboard dashboard = new FormDashboard();
-
-                dashboard.Show();
-
-                this.Hide();
-
+                AbrirDashboardUnico();
+                
             }
             else
             {
@@ -43,8 +39,33 @@ namespace ExamenFinal
                 txtUser.Focus();
             }
 
+        }
+        public void LimpiarYEnfocar()
+        {
+            txtUser.Clear();
+            txtPassword.Clear();
+            txtUser.Focus();
+        }
 
 
+
+        private void AbrirDashboardUnico()
+        {
+            FormDashboard dashboardExistente = Application.OpenForms.OfType<FormDashboard>().FirstOrDefault();
+
+            if (dashboardExistente != null)
+            {
+                dashboardExistente.BringToFront();
+                dashboardExistente.Focus();
+
+            }
+            else
+            {
+                FormDashboard nuevoDashboard = new FormDashboard();
+                nuevoDashboard.Show();
+            }
+
+            this.Hide();
         }
 
         private void btnClose_Click(object sender, EventArgs e)

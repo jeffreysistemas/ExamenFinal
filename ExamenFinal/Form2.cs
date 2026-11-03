@@ -64,16 +64,22 @@ namespace ExamenFinal
 
         private void btnClose_Click(object sender, EventArgs e)
         {
-            DialogResult resultado = MessageBox.Show("Estás seguro de cerrar Sesión ? ", "Cerrar Sesión", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            Form1 formLogin = Application.OpenForms.OfType<Form1>().FirstOrDefault();
 
-            if (resultado == DialogResult.Yes)
+            if (formLogin != null)
             {
-
-                Form1 loginForm = new Form1();
-                loginForm.Show();
-
-                this.Close();
+                formLogin.LimpiarYEnfocar();
+                formLogin.Show();
+                formLogin.BringToFront();
+                formLogin.Focus();
             }
+            else
+            {
+                Form1 nuevoLogin = new Form1();
+                nuevoLogin.Show();
+            }
+            this.Close();
         }
     }
 }
+

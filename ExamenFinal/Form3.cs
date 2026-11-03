@@ -52,14 +52,22 @@ namespace ExamenFinal
             {
                 File.AppendAllText(RutaArchivo, lineaExpediente + Environment.NewLine);
 
-                MessageBox.Show($"Expediente registrado con éxito! \n\n Código asignado : {codigoTicket}", "Registro Exitoso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show($"¡Expediente registrado con éxito!\n\nCódigo asignado: {codigoTicket}", "Registro Exitoso", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
-                this.Close();
+                // Redireccionamos a Form4 dentro del panelContenedor antes de cerrar o reemplazar este formulario
+                FormDashboard dashboard = Application.OpenForms.OfType<FormDashboard>().FirstOrDefault();
+                if (dashboard != null)
+                {
+                    dashboard.AbrirFormularioEnPanel<Form4>();
+                }
             }
             catch (Exception ex)
             {
                 MessageBox.Show("Ocurrio un error al guardar el archivo : " + ex.Message, "Error de Persistencia", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+
+
+      
         }
 
         private void button2_Click(object sender, EventArgs e)

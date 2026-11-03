@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormRegistro));
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
@@ -40,15 +39,7 @@
             this.label5 = new System.Windows.Forms.Label();
             this.txtDescripcion = new System.Windows.Forms.TextBox();
             this.btnRegistrar = new System.Windows.Forms.Button();
-            this.panel1 = new System.Windows.Forms.Panel();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.button2 = new System.Windows.Forms.Button();
-            this.panel2 = new System.Windows.Forms.Panel();
-            this.label6 = new System.Windows.Forms.Label();
-            this.button1 = new System.Windows.Forms.Button();
-            this.panel1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
-            this.panel2.SuspendLayout();
             this.SuspendLayout();
             // 
             // label1
@@ -56,7 +47,7 @@
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Century Gothic", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.label1.Location = new System.Drawing.Point(233, 114);
+            this.label1.Location = new System.Drawing.Point(94, 72);
             this.label1.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(63, 16);
@@ -68,7 +59,7 @@
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Century Gothic", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.label2.Location = new System.Drawing.Point(595, 114);
+            this.label2.Location = new System.Drawing.Point(487, 81);
             this.label2.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(173, 16);
@@ -80,7 +71,7 @@
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Century Gothic", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label3.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.label3.Location = new System.Drawing.Point(233, 209);
+            this.label3.Location = new System.Drawing.Point(46, 154);
             this.label3.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(111, 16);
@@ -90,7 +81,7 @@
             // txtCiudadano
             // 
             this.txtCiudadano.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.txtCiudadano.Location = new System.Drawing.Point(350, 114);
+            this.txtCiudadano.Location = new System.Drawing.Point(199, 72);
             this.txtCiudadano.Margin = new System.Windows.Forms.Padding(5, 4, 5, 4);
             this.txtCiudadano.Multiline = true;
             this.txtCiudadano.Name = "txtCiudadano";
@@ -100,7 +91,7 @@
             // txtDni
             // 
             this.txtDni.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.txtDni.Location = new System.Drawing.Point(803, 114);
+            this.txtDni.Location = new System.Drawing.Point(711, 72);
             this.txtDni.Margin = new System.Windows.Forms.Padding(5, 4, 5, 4);
             this.txtDni.Multiline = true;
             this.txtDni.Name = "txtDni";
@@ -115,10 +106,10 @@
             "Licencia de Funcionamiento",
             "Reclamo Vecinal / Ambiental",
             "Solicitud de Obras Públicas"});
-            this.cmbTipodeTramite.Location = new System.Drawing.Point(350, 206);
+            this.cmbTipodeTramite.Location = new System.Drawing.Point(199, 154);
             this.cmbTipodeTramite.Margin = new System.Windows.Forms.Padding(5, 4, 5, 4);
             this.cmbTipodeTramite.Name = "cmbTipodeTramite";
-            this.cmbTipodeTramite.Size = new System.Drawing.Size(147, 25);
+            this.cmbTipodeTramite.Size = new System.Drawing.Size(261, 25);
             this.cmbTipodeTramite.TabIndex = 5;
             // 
             // label4
@@ -126,7 +117,7 @@
             this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("Century Gothic", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label4.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.label4.Location = new System.Drawing.Point(695, 215);
+            this.label4.Location = new System.Drawing.Point(587, 163);
             this.label4.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(73, 16);
@@ -136,7 +127,7 @@
             // txtDireccion
             // 
             this.txtDireccion.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.txtDireccion.Location = new System.Drawing.Point(803, 209);
+            this.txtDireccion.Location = new System.Drawing.Point(711, 163);
             this.txtDireccion.Margin = new System.Windows.Forms.Padding(5, 4, 5, 4);
             this.txtDireccion.Multiline = true;
             this.txtDireccion.Name = "txtDireccion";
@@ -148,7 +139,7 @@
             this.label5.AutoSize = true;
             this.label5.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label5.ForeColor = System.Drawing.Color.Gainsboro;
-            this.label5.Location = new System.Drawing.Point(240, 312);
+            this.label5.Location = new System.Drawing.Point(53, 291);
             this.label5.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(104, 19);
@@ -158,7 +149,7 @@
             // txtDescripcion
             // 
             this.txtDescripcion.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.txtDescripcion.Location = new System.Drawing.Point(236, 345);
+            this.txtDescripcion.Location = new System.Drawing.Point(144, 323);
             this.txtDescripcion.Margin = new System.Windows.Forms.Padding(5, 4, 5, 4);
             this.txtDescripcion.Multiline = true;
             this.txtDescripcion.Name = "txtDescripcion";
@@ -172,7 +163,7 @@
             this.btnRegistrar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnRegistrar.Font = new System.Drawing.Font("Century Gothic", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnRegistrar.ForeColor = System.Drawing.Color.Gainsboro;
-            this.btnRegistrar.Location = new System.Drawing.Point(501, 531);
+            this.btnRegistrar.Location = new System.Drawing.Point(377, 490);
             this.btnRegistrar.Margin = new System.Windows.Forms.Padding(5, 4, 5, 4);
             this.btnRegistrar.Name = "btnRegistrar";
             this.btnRegistrar.Size = new System.Drawing.Size(240, 78);
@@ -181,35 +172,12 @@
             this.btnRegistrar.UseVisualStyleBackColor = false;
             this.btnRegistrar.Click += new System.EventHandler(this.btnRegistrar_Click);
             // 
-            // panel1
-            // 
-            this.panel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(51)))), ((int)(((byte)(51)))));
-            this.panel1.Controls.Add(this.pictureBox1);
-            this.panel1.Controls.Add(this.button2);
-            this.panel1.Dock = System.Windows.Forms.DockStyle.Left;
-            this.panel1.Location = new System.Drawing.Point(0, 0);
-            this.panel1.Margin = new System.Windows.Forms.Padding(5, 4, 5, 4);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(177, 661);
-            this.panel1.TabIndex = 11;
-            // 
-            // pictureBox1
-            // 
-            this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
-            this.pictureBox1.Location = new System.Drawing.Point(32, 13);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(100, 100);
-            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
-            this.pictureBox1.TabIndex = 14;
-            this.pictureBox1.TabStop = false;
-            // 
             // button2
             // 
-            this.button2.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.button2.FlatAppearance.BorderSize = 0;
+            this.button2.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
             this.button2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.button2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.button2.Location = new System.Drawing.Point(0, 616);
+            this.button2.Location = new System.Drawing.Point(12, 543);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(177, 45);
             this.button2.TabIndex = 13;
@@ -217,52 +185,13 @@
             this.button2.UseVisualStyleBackColor = true;
             this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
-            // panel2
-            // 
-            this.panel2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(51)))), ((int)(((byte)(51)))));
-            this.panel2.Controls.Add(this.label6);
-            this.panel2.Controls.Add(this.button1);
-            this.panel2.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel2.Location = new System.Drawing.Point(177, 0);
-            this.panel2.Margin = new System.Windows.Forms.Padding(5, 4, 5, 4);
-            this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(844, 44);
-            this.panel2.TabIndex = 12;
-            // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label6.ForeColor = System.Drawing.Color.Gainsboro;
-            this.label6.Location = new System.Drawing.Point(27, 13);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(304, 21);
-            this.label6.TabIndex = 14;
-            this.label6.Text = "Mesa de Partes - Registrar Ciudadano";
-            // 
-            // button1
-            // 
-            this.button1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(51)))), ((int)(((byte)(51)))));
-            this.button1.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("button1.BackgroundImage")));
-            this.button1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.button1.Dock = System.Windows.Forms.DockStyle.Right;
-            this.button1.FlatAppearance.BorderSize = 0;
-            this.button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button1.ForeColor = System.Drawing.Color.Transparent;
-            this.button1.Location = new System.Drawing.Point(787, 0);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(57, 44);
-            this.button1.TabIndex = 13;
-            this.button1.UseVisualStyleBackColor = false;
-            // 
             // FormRegistro
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 17F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(102)))), ((int)(((byte)(102)))));
-            this.ClientSize = new System.Drawing.Size(1021, 661);
-            this.Controls.Add(this.panel2);
-            this.Controls.Add(this.panel1);
+            this.ClientSize = new System.Drawing.Size(973, 600);
+            this.Controls.Add(this.button2);
             this.Controls.Add(this.btnRegistrar);
             this.Controls.Add(this.txtDescripcion);
             this.Controls.Add(this.label5);
@@ -281,10 +210,6 @@
             this.Name = "FormRegistro";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Mesa de Partes Digital - Nuevo Trámite";
-            this.panel1.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
-            this.panel2.ResumeLayout(false);
-            this.panel2.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -303,11 +228,6 @@
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.TextBox txtDescripcion;
         private System.Windows.Forms.Button btnRegistrar;
-        private System.Windows.Forms.Panel panel1;
-        private System.Windows.Forms.Panel panel2;
-        private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Button button2;
-        private System.Windows.Forms.PictureBox pictureBox1;
     }
 }

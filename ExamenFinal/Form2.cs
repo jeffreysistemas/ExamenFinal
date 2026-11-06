@@ -75,6 +75,8 @@ namespace ExamenFinal
 
         private void btnConsultarTicket_Click(object sender, EventArgs e)
         {
+
+            AbrirFormularioEnPanel<Form5>();    
                
         }
 

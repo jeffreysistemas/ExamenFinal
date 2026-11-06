@@ -30,10 +30,10 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormDashboard));
             this.panel1 = new System.Windows.Forms.Panel();
+            this.btnVerTabla = new System.Windows.Forms.Button();
             this.pictureBox4 = new System.Windows.Forms.PictureBox();
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
             this.pictureBox3 = new System.Windows.Forms.PictureBox();
-            this.button3 = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
             this.btnConsultarTicket = new System.Windows.Forms.Button();
             this.btnNuevoTramite = new System.Windows.Forms.Button();
@@ -46,7 +46,7 @@
             this.btnClose = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
             this.panelContenedor = new System.Windows.Forms.Panel();
-            this.btnVerTabla = new System.Windows.Forms.Button();
+            this.btnEstadisticas = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
@@ -59,11 +59,12 @@
             // panel1
             // 
             this.panel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(51)))), ((int)(((byte)(51)))));
+            this.panel1.Controls.Add(this.btnEstadisticas);
+            this.panel1.Controls.Add(this.btnClose);
             this.panel1.Controls.Add(this.btnVerTabla);
             this.panel1.Controls.Add(this.pictureBox4);
             this.panel1.Controls.Add(this.pictureBox2);
             this.panel1.Controls.Add(this.pictureBox3);
-            this.panel1.Controls.Add(this.button3);
             this.panel1.Controls.Add(this.button2);
             this.panel1.Controls.Add(this.btnConsultarTicket);
             this.panel1.Controls.Add(this.btnNuevoTramite);
@@ -75,6 +76,23 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(227, 700);
             this.panel1.TabIndex = 0;
+            // 
+            // btnVerTabla
+            // 
+            this.btnVerTabla.CausesValidation = false;
+            this.btnVerTabla.Dock = System.Windows.Forms.DockStyle.Top;
+            this.btnVerTabla.FlatAppearance.BorderSize = 0;
+            this.btnVerTabla.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnVerTabla.Font = new System.Drawing.Font("Century Gothic", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnVerTabla.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.btnVerTabla.Location = new System.Drawing.Point(15, 234);
+            this.btnVerTabla.Name = "btnVerTabla";
+            this.btnVerTabla.Size = new System.Drawing.Size(197, 45);
+            this.btnVerTabla.TabIndex = 14;
+            this.btnVerTabla.Text = "Lista General";
+            this.btnVerTabla.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.btnVerTabla.UseVisualStyleBackColor = true;
+            this.btnVerTabla.Click += new System.EventHandler(this.btnVerTabla_Click);
             // 
             // pictureBox4
             // 
@@ -105,22 +123,6 @@
             this.pictureBox3.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.pictureBox3.TabIndex = 4;
             this.pictureBox3.TabStop = false;
-            // 
-            // button3
-            // 
-            this.button3.CausesValidation = false;
-            this.button3.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.button3.FlatAppearance.BorderSize = 0;
-            this.button3.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button3.Font = new System.Drawing.Font("Century Gothic", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button3.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.button3.Location = new System.Drawing.Point(15, 655);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(197, 45);
-            this.button3.TabIndex = 11;
-            this.button3.Text = "Volver a Login";
-            this.button3.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            this.button3.UseVisualStyleBackColor = true;
             // 
             // button2
             // 
@@ -223,7 +225,6 @@
             // panel5
             // 
             this.panel5.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(51)))), ((int)(((byte)(51)))));
-            this.panel5.Controls.Add(this.btnClose);
             this.panel5.Controls.Add(this.label2);
             this.panel5.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel5.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -234,14 +235,17 @@
             // 
             // btnClose
             // 
-            this.btnClose.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("btnClose.BackgroundImage")));
             this.btnClose.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.btnClose.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.btnClose.FlatAppearance.BorderSize = 0;
             this.btnClose.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnClose.Location = new System.Drawing.Point(920, 3);
+            this.btnClose.Font = new System.Drawing.Font("Century Gothic", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnClose.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.btnClose.Location = new System.Drawing.Point(15, 650);
             this.btnClose.Name = "btnClose";
-            this.btnClose.Size = new System.Drawing.Size(50, 50);
+            this.btnClose.Size = new System.Drawing.Size(197, 50);
             this.btnClose.TabIndex = 1;
+            this.btnClose.Text = "Cerrar Sesión";
             this.btnClose.UseVisualStyleBackColor = true;
             this.btnClose.Click += new System.EventHandler(this.btnClose_Click);
             // 
@@ -263,22 +267,22 @@
             this.panelContenedor.Size = new System.Drawing.Size(973, 600);
             this.panelContenedor.TabIndex = 3;
             // 
-            // btnVerTabla
+            // btnEstadisticas
             // 
-            this.btnVerTabla.CausesValidation = false;
-            this.btnVerTabla.Dock = System.Windows.Forms.DockStyle.Top;
-            this.btnVerTabla.FlatAppearance.BorderSize = 0;
-            this.btnVerTabla.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnVerTabla.Font = new System.Drawing.Font("Century Gothic", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnVerTabla.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.btnVerTabla.Location = new System.Drawing.Point(15, 234);
-            this.btnVerTabla.Name = "btnVerTabla";
-            this.btnVerTabla.Size = new System.Drawing.Size(197, 45);
-            this.btnVerTabla.TabIndex = 14;
-            this.btnVerTabla.Text = "Datagredview";
-            this.btnVerTabla.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            this.btnVerTabla.UseVisualStyleBackColor = true;
-            this.btnVerTabla.Click += new System.EventHandler(this.btnVerTabla_Click);
+            this.btnEstadisticas.CausesValidation = false;
+            this.btnEstadisticas.Dock = System.Windows.Forms.DockStyle.Top;
+            this.btnEstadisticas.FlatAppearance.BorderSize = 0;
+            this.btnEstadisticas.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnEstadisticas.Font = new System.Drawing.Font("Century Gothic", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnEstadisticas.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.btnEstadisticas.Location = new System.Drawing.Point(15, 279);
+            this.btnEstadisticas.Name = "btnEstadisticas";
+            this.btnEstadisticas.Size = new System.Drawing.Size(197, 45);
+            this.btnEstadisticas.TabIndex = 15;
+            this.btnEstadisticas.Text = "Estadística";
+            this.btnEstadisticas.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.btnEstadisticas.UseVisualStyleBackColor = true;
+            this.btnEstadisticas.Click += new System.EventHandler(this.btnEstadisticas_Click);
             // 
             // FormDashboard
             // 
@@ -310,7 +314,6 @@
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Button button3;
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.Button btnConsultarTicket;
         private System.Windows.Forms.Button btnNuevoTramite;
@@ -325,5 +328,6 @@
         private System.Windows.Forms.PictureBox pictureBox2;
         private System.Windows.Forms.Panel panelContenedor;
         private System.Windows.Forms.Button btnVerTabla;
+        private System.Windows.Forms.Button btnEstadisticas;
     }
 }

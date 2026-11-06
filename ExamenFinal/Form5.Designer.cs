@@ -93,7 +93,7 @@
             this.dgvResultadoTicket.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvResultadoTicket.Location = new System.Drawing.Point(45, 178);
             this.dgvResultadoTicket.Name = "dgvResultadoTicket";
-            this.dgvResultadoTicket.Size = new System.Drawing.Size(756, 343);
+            this.dgvResultadoTicket.Size = new System.Drawing.Size(790, 343);
             this.dgvResultadoTicket.TabIndex = 4;
             // 
             // Form5

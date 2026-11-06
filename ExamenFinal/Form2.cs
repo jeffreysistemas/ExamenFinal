@@ -84,6 +84,11 @@ namespace ExamenFinal
         {
             AbrirFormularioEnPanel<Form4>();
         }
+
+        private void btnEstadisticas_Click(object sender, EventArgs e)
+        {
+            AbrirFormularioEnPanel<Form6>();
+        }
     }
 }
 

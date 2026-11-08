@@ -89,6 +89,8 @@ namespace ExamenFinal
                 return;
 
             }
+            string busquedaLimpia = CodigoBuscado.Replace(" ", "");
+
             dgvResultadoTicket.Rows.Clear();
             bool encontrado = false;
 
@@ -104,7 +106,14 @@ namespace ExamenFinal
 
                         if (datos.Length >= 7)
                         {
-                            if (datos[0].Trim().Equals(CodigoBuscado, StringComparison.OrdinalIgnoreCase))
+
+
+                            string codigoEnArchivo = datos[0].Trim();
+                            string codigoSinEspacios = codigoEnArchivo.Replace(" ", "");
+
+
+                            if (codigoSinEspacios.Equals(busquedaLimpia, StringComparison.OrdinalIgnoreCase) ||
+                                codigoEnArchivo.IndexOf(CodigoBuscado, StringComparison.OrdinalIgnoreCase) >= 0)
                             {
                                 dgvResultadoTicket.Rows.Add(
                                     datos[0].Trim(),
@@ -117,7 +126,7 @@ namespace ExamenFinal
                                 );
 
                                 encontrado = true;
-                                break;
+                                
                             }
                         }
                     }

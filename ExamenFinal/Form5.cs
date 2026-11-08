@@ -40,7 +40,17 @@ namespace ExamenFinal
             dgvResultadoTicket.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             dgvResultadoTicket.ReadOnly = true;
 
+            dgvResultadoTicket.DefaultCellStyle.WrapMode = DataGridViewTriState.True;
+
+            dgvResultadoTicket.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
+
+            if (dgvResultadoTicket.Columns["Descripción"] != null)
+            {
+                dgvResultadoTicket.Columns["Descripción"].DefaultCellStyle.WrapMode= DataGridViewTriState.True;
+            }
+
         }
+
 
         private void CargarTodosLosTickets()
         {
@@ -145,6 +155,23 @@ namespace ExamenFinal
             CargarTodosLosTickets();
             txtBuscarTicket.Focus();
 
+        }
+
+        private void dgvResultadoTicket_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex >= 0)
+            {
+                string codigo = dgvResultadoTicket.Rows[e.RowIndex].Cells["Código"].Value?.ToString();
+                string ciudadano = dgvResultadoTicket.Rows[e.RowIndex].Cells["Ciudadano"].Value?.ToString();
+                string descripcion = dgvResultadoTicket.Rows[e.RowIndex].Cells["Descripción"].Value?.ToString();
+
+
+                string detalle = $"CÓDIGO: {codigo}\n" +
+                                 $"CIUDADANO: {ciudadano}\n\n"+
+                                 $"DESCRIPCIÓN COMPLETA:\n{descripcion}";
+
+                MessageBox.Show(detalle, "Detalle completo del expediente", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
         }
     }
 }

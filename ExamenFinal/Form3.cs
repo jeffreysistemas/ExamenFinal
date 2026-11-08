@@ -54,7 +54,7 @@ namespace ExamenFinal
 
                 MessageBox.Show($"¡Expediente registrado con éxito!\n\nCódigo asignado: {codigoTicket}", "Registro Exitoso", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
-                // Redireccionamos a Form4 dentro del panelContenedor antes de cerrar o reemplazar este formulario
+               
                 FormDashboard dashboard = Application.OpenForms.OfType<FormDashboard>().FirstOrDefault();
                 if (dashboard != null)
                 {

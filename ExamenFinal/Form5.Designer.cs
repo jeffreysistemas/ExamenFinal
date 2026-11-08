@@ -91,17 +91,18 @@
             // dgvResultadoTicket
             // 
             this.dgvResultadoTicket.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvResultadoTicket.Location = new System.Drawing.Point(45, 178);
+            this.dgvResultadoTicket.Location = new System.Drawing.Point(27, 178);
             this.dgvResultadoTicket.Name = "dgvResultadoTicket";
-            this.dgvResultadoTicket.Size = new System.Drawing.Size(790, 343);
+            this.dgvResultadoTicket.Size = new System.Drawing.Size(918, 397);
             this.dgvResultadoTicket.TabIndex = 4;
+            this.dgvResultadoTicket.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvResultadoTicket_CellDoubleClick);
             // 
             // Form5
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 17F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(102)))), ((int)(((byte)(102)))));
-            this.ClientSize = new System.Drawing.Size(878, 551);
+            this.ClientSize = new System.Drawing.Size(973, 600);
             this.Controls.Add(this.dgvResultadoTicket);
             this.Controls.Add(this.btnLimpiarBusqueda);
             this.Controls.Add(this.btnBuscarTicket);
@@ -109,7 +110,7 @@
             this.Controls.Add(this.label1);
             this.Font = new System.Drawing.Font("Century Gothic", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "Form5";
             this.Text = "Form5";
             this.Load += new System.EventHandler(this.Form5_Load);

@@ -99,6 +99,7 @@
             // 
             // cmbTipodeTramite
             // 
+            this.cmbTipodeTramite.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbTipodeTramite.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.cmbTipodeTramite.FormattingEnabled = true;
             this.cmbTipodeTramite.Items.AddRange(new object[] {
@@ -175,7 +176,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 17F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(102)))), ((int)(((byte)(102)))));
+            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(51)))), ((int)(((byte)(51)))));
             this.ClientSize = new System.Drawing.Size(973, 600);
             this.Controls.Add(this.btnRegistrar);
             this.Controls.Add(this.txtDescripcion);

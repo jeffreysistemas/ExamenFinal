@@ -17,6 +17,10 @@ namespace ExamenFinal
 
         private void Form4_Load(object sender, EventArgs e)
         {
+            if (cmbFiltroCategoria.Items.Count > 0)
+            {
+                cmbFiltroCategoria.SelectedIndex = 0;
+            }
             CargarExpedientesEnTabla();
         }
 
@@ -24,13 +28,12 @@ namespace ExamenFinal
         {
             dataGridView1.Rows.Clear();
 
-            if (!File.Exists(RutaArchivo))
-            {
-                
-                return;
-            }
+            if (!File.Exists(RutaArchivo)) return;
 
             string[] lineas = File.ReadAllLines(RutaArchivo);
+            string filtro = cmbFiltroCategoria.SelectedItem != null ? cmbFiltroCategoria.SelectedItem.ToString() : "[Todos]";
+
+         
 
             foreach (string linea in lineas)
             {
@@ -40,7 +43,14 @@ namespace ExamenFinal
 
                     if (datos.Length >= 7)
                     {
-                        dataGridView1.Rows.Add(
+
+                        string tipoTramite = datos[3].Trim();
+
+                        if (filtro == "[Todos]" || tipoTramite.IndexOf(filtro, StringComparison.OrdinalIgnoreCase) >= 0)
+                        {
+                            string estado = datos.Length >= 8 ? datos[7].Trim() : "Ingresado";
+
+                            dataGridView1.Rows.Add(
                             datos[0].Trim(),
                             datos[1].Trim(),
                             datos[2].Trim(),
@@ -48,10 +58,16 @@ namespace ExamenFinal
                             datos[4].Trim(),
                             datos[5].Trim(),
                             datos[6].Trim()
-                        );
+                            );                    
+                        } 
                     }
                 }
             }
+        }
+
+        private void cmbFiltroCategoria_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            CargarExpedientesEnTabla();
         }
     }
 }

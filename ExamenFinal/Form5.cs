@@ -40,7 +40,7 @@ namespace ExamenFinal
 
             dgvResultadoTicket.DefaultCellStyle.Font = new Font("Century Gothic", 9F, FontStyle.Bold);
             dgvResultadoTicket.ColumnHeadersDefaultCellStyle.Font = new Font("Century Gothic", 10F, FontStyle.Bold);
-        
+
 
             dgvResultadoTicket.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             dgvResultadoTicket.ReadOnly = true;
@@ -51,7 +51,7 @@ namespace ExamenFinal
 
             if (dgvResultadoTicket.Columns["Descripción"] != null)
             {
-                dgvResultadoTicket.Columns["Descripción"].DefaultCellStyle.WrapMode= DataGridViewTriState.True;
+                dgvResultadoTicket.Columns["Descripción"].DefaultCellStyle.WrapMode = DataGridViewTriState.True;
             }
 
         }
@@ -84,9 +84,9 @@ namespace ExamenFinal
                                 datos[4].Trim(),
                                 datos[5].Trim(),
                                 datos[6].Trim(),
-                                estado                           
+                                estado
                                 );
-                                
+
                         }
                     }
 
@@ -143,10 +143,10 @@ namespace ExamenFinal
                                     datos[6].Trim(),
                                     estado
                                     );
-                                
+
 
                                 encontrado = true;
-                                
+
                             }
                         }
                     }
@@ -166,6 +166,60 @@ namespace ExamenFinal
             txtBuscarTicket.Focus();
 
         }
+        private void btnImprimirConstancia_Click(object sender, EventArgs e)
+        {
+            if (dgvResultadoTicket.CurrentRow == null || dgvResultadoTicket.CurrentRow.Index < 0)
+            {
+                MessageBox.Show(
+                    "Por favor, seleccione un expediente de la tabla para generar su constancia.",
+                    "Selección Requerida",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Warning
+                );
+                return;
+            }
+
+            DataGridViewRow fila = dgvResultadoTicket.CurrentRow;
+
+            string codigo = fila.Cells[0].Value != null ? fila.Cells[0].Value.ToString() : "";
+            string ciudadano = fila.Cells[1].Value != null ? fila.Cells[1].Value.ToString() : "";
+            string dni = fila.Cells[2].Value != null ? fila.Cells[2].Value.ToString() : "";
+            string tipo = fila.Cells[3].Value != null ? fila.Cells[3].Value.ToString() : "";
+            string direccion = fila.Cells[4].Value != null ? fila.Cells[4].Value.ToString() : "";
+            string descripcion = fila.Cells[5].Value != null ? fila.Cells[5].Value.ToString() : "";
+            string fecha = fila.Cells[6].Value != null ? fila.Cells[6].Value.ToString() : "";
+
+
+            string estado = fila.Cells.Count >= 8 && fila.Cells[7].Value != null
+                    ? fila.Cells[7].Value.ToString()
+                    : "Ingresado";
+
+            string ticketTexto =
+          "=======================================\n" +
+          "        MUNICIPALIDAD DE LOS OLIVOS\n" +
+          "    MESA DE PARTES DIGITAL - CONSTANCIA OFICIAL\n" +
+          "=======================================\n" +
+          $" CÓDIGO TICKET : {codigo}\n" +
+          $" FECHA REGISTRO: {fecha}\n" +
+          $" ESTADO ACTUAL : {estado}\n\n" +
+          " DATOS DEL CIUDADANO:\n" +
+          " ---------------------------------------\n" +
+          $" Nombre        : {ciudadano}\n" +
+          $" DNI           : {dni}\n" +
+          $" Dirección     : {direccion}\n\n" +
+          " DETALLE DE LA SOLICITUD:\n" +
+          " ---------------------------------------\n" +
+          $" Tipo Trámite  : {tipo}\n" +
+          $" Descripción   : {descripcion}\n\n" +
+          "=======================================\n" +
+          " Conserve este documento para realizar el seguimiento\n" +
+          " de su trámite en la plataforma institucional.\n" +
+          "=======================================";
+
+
+            MessageBox.Show(ticketTexto, $"Constancia Oficial - {codigo}", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+        }
 
         private void dgvResultadoTicket_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
@@ -177,11 +231,11 @@ namespace ExamenFinal
 
 
                 string detalle = $"CÓDIGO: {codigo}\n" +
-                                 $"CIUDADANO: {ciudadano}\n\n"+
+                                 $"CIUDADANO: {ciudadano}\n\n" +
                                  $"DESCRIPCIÓN COMPLETA:\n{descripcion}";
 
                 MessageBox.Show(detalle, "Detalle completo del expediente", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
-    }
+     }
 }

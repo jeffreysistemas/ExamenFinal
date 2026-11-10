@@ -35,13 +35,19 @@ namespace ExamenFinal
             ReleaseCapture();
             SendMessage(this.Handle, 0x112, 0xf012, 0);
         }
-        private void panelContenedor_MouseDown(object sender, MouseEventArgs e)
+
+        private void panel5_MouseDown(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Left)
             {
                 MoverVentana();
             }
+
         }
+
+
+
+
 
 
 
@@ -117,7 +123,6 @@ namespace ExamenFinal
         {
             AbrirFormularioEnPanel<Form6>();
         }
-
 
     }
 }

@@ -52,7 +52,7 @@
             // 
             // panel1
             // 
-            this.panel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(51)))), ((int)(((byte)(51)))));
+            this.panel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(33)))), ((int)(((byte)(74)))));
             this.panel1.Controls.Add(this.btnEliminarFinalizados);
             this.panel1.Controls.Add(this.btnCambiarEstado);
             this.panel1.Controls.Add(this.cmbFiltroCategoria);
@@ -73,7 +73,7 @@
             "Licencia",
             "Reclamo",
             "Solicitud"});
-            this.cmbFiltroCategoria.Location = new System.Drawing.Point(222, 16);
+            this.cmbFiltroCategoria.Location = new System.Drawing.Point(221, 27);
             this.cmbFiltroCategoria.Name = "cmbFiltroCategoria";
             this.cmbFiltroCategoria.Size = new System.Drawing.Size(242, 21);
             this.cmbFiltroCategoria.TabIndex = 1;
@@ -84,7 +84,7 @@
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Century Gothic", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.label1.Location = new System.Drawing.Point(59, 20);
+            this.label1.Location = new System.Drawing.Point(40, 31);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(139, 17);
             this.label1.TabIndex = 0;
@@ -129,7 +129,7 @@
             dataGridViewCellStyle2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
             dataGridViewCellStyle2.Font = new System.Drawing.Font("Century Gothic", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             dataGridViewCellStyle2.ForeColor = System.Drawing.Color.Black;
-            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(102)))), ((int)(((byte)(255)))), ((int)(((byte)(204)))));
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.Color.Thistle;
             dataGridViewCellStyle2.SelectionForeColor = System.Drawing.Color.Black;
             dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
             this.dataGridView1.DefaultCellStyle = dataGridViewCellStyle2;
@@ -146,7 +146,7 @@
             // 
             // btnCambiarEstado
             // 
-            this.btnCambiarEstado.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(51)))), ((int)(((byte)(51)))));
+            this.btnCambiarEstado.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(33)))), ((int)(((byte)(74)))));
             this.btnCambiarEstado.FlatAppearance.BorderColor = System.Drawing.Color.White;
             this.btnCambiarEstado.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnCambiarEstado.Font = new System.Drawing.Font("Century Gothic", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -213,7 +213,7 @@
             // 
             // btnEliminarFinalizados
             // 
-            this.btnEliminarFinalizados.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(51)))), ((int)(((byte)(51)))));
+            this.btnEliminarFinalizados.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(33)))), ((int)(((byte)(74)))));
             this.btnEliminarFinalizados.FlatAppearance.BorderColor = System.Drawing.Color.White;
             this.btnEliminarFinalizados.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnEliminarFinalizados.Font = new System.Drawing.Font("Century Gothic", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));

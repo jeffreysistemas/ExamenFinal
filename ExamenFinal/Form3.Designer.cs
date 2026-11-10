@@ -148,6 +148,7 @@
             // 
             // txtDescripcion
             // 
+            this.txtDescripcion.BackColor = System.Drawing.Color.Silver;
             this.txtDescripcion.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.txtDescripcion.Location = new System.Drawing.Point(144, 323);
             this.txtDescripcion.Margin = new System.Windows.Forms.Padding(5, 4, 5, 4);
@@ -158,7 +159,7 @@
             // 
             // btnRegistrar
             // 
-            this.btnRegistrar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(51)))), ((int)(((byte)(51)))));
+            this.btnRegistrar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(33)))), ((int)(((byte)(74)))));
             this.btnRegistrar.FlatAppearance.BorderColor = System.Drawing.Color.White;
             this.btnRegistrar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnRegistrar.Font = new System.Drawing.Font("Century Gothic", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -176,7 +177,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 17F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(51)))), ((int)(((byte)(51)))));
+            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(33)))), ((int)(((byte)(74)))));
             this.ClientSize = new System.Drawing.Size(973, 600);
             this.Controls.Add(this.btnRegistrar);
             this.Controls.Add(this.txtDescripcion);

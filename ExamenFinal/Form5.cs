@@ -38,6 +38,10 @@ namespace ExamenFinal
             dgvResultadoTicket.Columns.Add("Fecha", "Fecha Registro");
             dgvResultadoTicket.Columns.Add("Estado", "Estado");
 
+            dgvResultadoTicket.DefaultCellStyle.Font = new Font("Century Gothic", 9F, FontStyle.Bold);
+            dgvResultadoTicket.ColumnHeadersDefaultCellStyle.Font = new Font("Century Gothic", 10F, FontStyle.Bold);
+        
+
             dgvResultadoTicket.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             dgvResultadoTicket.ReadOnly = true;
 

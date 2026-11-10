@@ -8,15 +8,43 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO;
+using System.Security.Cryptography;
+using System.Runtime.InteropServices;
+
+
 
 namespace ExamenFinal
 {
     public partial class FormDashboard : System.Windows.Forms.Form
     {
+
+
         public FormDashboard()
         {
             InitializeComponent();
         }
+
+        [DllImport("user32.DLL", EntryPoint = "ReleaseCapture")]
+        private extern static void ReleaseCapture();
+
+        [DllImport("user32.DLL", EntryPoint = "SendMessage")]
+        private extern static void SendMessage(IntPtr hWnd, int wMsg, int wParam, int lParam);
+
+        private void MoverVentana()
+        {
+            ReleaseCapture();
+            SendMessage(this.Handle, 0x112, 0xf012, 0);
+        }
+        private void panelContenedor_MouseDown(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Left)
+            {
+                MoverVentana();
+            }
+        }
+
+
+
 
 
 
@@ -76,8 +104,8 @@ namespace ExamenFinal
         private void btnConsultarTicket_Click(object sender, EventArgs e)
         {
 
-            AbrirFormularioEnPanel<Form5>();    
-               
+            AbrirFormularioEnPanel<Form5>();
+
         }
 
         private void btnVerTabla_Click(object sender, EventArgs e)
@@ -89,6 +117,7 @@ namespace ExamenFinal
         {
             AbrirFormularioEnPanel<Form6>();
         }
+
+
     }
 }
-

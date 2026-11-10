@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO;
+using System.Runtime.InteropServices;
 
 namespace ExamenFinal
 {
@@ -17,6 +18,26 @@ namespace ExamenFinal
         {
             InitializeComponent();  
         }
+
+        [DllImport("user32.DLL", EntryPoint = "ReleaseCapture")]
+        private extern static void ReleaseCapture();
+        [DllImport("user32.DLL", EntryPoint = "SendMessage")]
+        private extern static void SendMessage(IntPtr hWnd, int wMsg, int wParam, int lParam);
+
+
+        private void MoverVentana()
+        {
+            ReleaseCapture();
+            SendMessage(this.Handle, 0x112, 0xf012, 0);
+        }
+        private void panelCabecera_MouseDown(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Left)
+            {
+                MoverVentana();
+            }
+        }
+
 
         private void btnLogin_Click(object sender, EventArgs e)
         {
@@ -68,6 +89,14 @@ namespace ExamenFinal
             this.Hide();
         }
 
+     
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+           
+
+        }
+
         private void btnClose_Click(object sender, EventArgs e)
         {
             DialogResult resultado = MessageBox.Show("¿Estás seguro de Salir de la Aplicación ?", "Confirmar Salida", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
@@ -76,12 +105,6 @@ namespace ExamenFinal
             {
                 Application.Exit();
             }
-        }
-
-        private void Form1_Load(object sender, EventArgs e)
-        {
-           
-
         }
     }
 }

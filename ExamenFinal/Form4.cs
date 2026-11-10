@@ -6,7 +6,7 @@ namespace ExamenFinal
 {
     public partial class Form4 : Form
     {
-     
+
         private const string RutaArchivo = "expediente_olivos.txt";
 
         public Form4()
@@ -33,7 +33,7 @@ namespace ExamenFinal
             string[] lineas = File.ReadAllLines(RutaArchivo);
             string filtro = cmbFiltroCategoria.SelectedItem != null ? cmbFiltroCategoria.SelectedItem.ToString() : "[Todos]";
 
-         
+
 
             foreach (string linea in lineas)
             {
@@ -57,9 +57,10 @@ namespace ExamenFinal
                             datos[3].Trim(),
                             datos[4].Trim(),
                             datos[5].Trim(),
-                            datos[6].Trim()
-                            );                    
-                        } 
+                            datos[6].Trim(),
+                            estado
+                            );
+                        }
                     }
                 }
             }
@@ -68,6 +69,77 @@ namespace ExamenFinal
         private void cmbFiltroCategoria_SelectedIndexChanged(object sender, EventArgs e)
         {
             CargarExpedientesEnTabla();
+        }
+
+        private void btnCambiarEstado_Click(object sender, EventArgs e)
+        {
+            if (dataGridView1.CurrentRow == null || dataGridView1.CurrentRow.Index < 0)
+            {
+                MessageBox.Show("Por favor, seleccione un expediente de la tabla.", "Selección Requerida", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+            string codigoSeleccionado = dataGridView1.CurrentRow.Cells[0].Value?.ToString();
+
+            if (string.IsNullOrWhiteSpace(codigoSeleccionado))
+            {
+                MessageBox.Show("No se pudo obtener el código del expediente seleccionado.", "Error de Selección", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+
+            string estadoActual = "Ingresado";
+
+            if (dataGridView1.CurrentRow.Cells.Count >= 8 && dataGridView1.CurrentRow.Cells[7].Value != null)
+            {
+                estadoActual = dataGridView1.CurrentRow.Cells[7].Value.ToString().Trim();
+            }
+
+
+            string nuevoEstado = "Ingresado";
+
+            if (estadoActual.Equals("Ingresado", StringComparison.OrdinalIgnoreCase))
+            {
+                nuevoEstado = "En Proceso";
+            }
+            else if (estadoActual.Equals("En Proceso", StringComparison.OrdinalIgnoreCase))
+            {
+                nuevoEstado = "Finalizado";
+            }
+            else
+            {
+                nuevoEstado = "Ingresado";
+            }
+
+            if (File.Exists(RutaArchivo))
+            {
+                string[] lineas = File.ReadAllLines(RutaArchivo);
+                for (int i = 0; i < lineas.Length; i++)
+                {
+                    if (!string.IsNullOrWhiteSpace(lineas[i]))
+                    {
+                        string[] datos = lineas[i].Split('|');
+                        if (datos.Length >= 7 && datos[0].Trim().Equals(codigoSeleccionado.Trim(), StringComparison.OrdinalIgnoreCase))
+                        {
+                            string codigo = datos[0].Trim();
+                            string ciudadano = datos[1].Trim();
+                            string dni = datos[2].Trim();
+                            string tipo = datos[3].Trim();
+                            string direccion = datos[4].Trim();
+                            string descripcion = datos[5].Trim();
+                            string fecha = datos[6].Trim();
+
+                          
+                            lineas[i] = $"{codigo}|{ciudadano}|{dni}|{tipo}|{direccion}|{descripcion}|{fecha}|{nuevoEstado}";
+                            break;
+                        }
+                    }
+                }
+                File.WriteAllLines(RutaArchivo, lineas);
+
+                MessageBox.Show($"El estado del expediente '{codigoSeleccionado}' se actualizó a: [{nuevoEstado}]", "Estado Actualizado", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                CargarExpedientesEnTabla();
+            }
         }
     }
 }

@@ -36,6 +36,7 @@ namespace ExamenFinal
             dgvResultadoTicket.Columns.Add("Dirección", "Dirección");
             dgvResultadoTicket.Columns.Add("Descripción", "Descripción");
             dgvResultadoTicket.Columns.Add("Fecha", "Fecha Registro");
+            dgvResultadoTicket.Columns.Add("Estado", "Estado");
 
             dgvResultadoTicket.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             dgvResultadoTicket.ReadOnly = true;
@@ -70,6 +71,7 @@ namespace ExamenFinal
 
                         if (datos.Length >= 7)
                         {
+                            string estado = datos.Length >= 8 ? datos[7].Trim() : "Ingresado";
                             dgvResultadoTicket.Rows.Add(
                                 datos[0].Trim(),
                                 datos[1].Trim(),
@@ -77,7 +79,8 @@ namespace ExamenFinal
                                 datos[3].Trim(),
                                 datos[4].Trim(),
                                 datos[5].Trim(),
-                                datos[6].Trim()
+                                datos[6].Trim(),
+                                estado                           
                                 );
                                 
                         }
@@ -125,6 +128,7 @@ namespace ExamenFinal
                             if (codigoSinEspacios.Equals(busquedaLimpia, StringComparison.OrdinalIgnoreCase) ||
                                 codigoEnArchivo.IndexOf(CodigoBuscado, StringComparison.OrdinalIgnoreCase) >= 0)
                             {
+                                string estado = datos.Length >= 8 ? datos[7].Trim() : "Ingresado";
                                 dgvResultadoTicket.Rows.Add(
                                     datos[0].Trim(),
                                     datos[1].Trim(),
@@ -132,8 +136,10 @@ namespace ExamenFinal
                                     datos[3].Trim(),
                                     datos[4].Trim(),
                                     datos[5].Trim(),
-                                    datos[6].Trim()                              
-                                );
+                                    datos[6].Trim(),
+                                    estado
+                                    );
+                                
 
                                 encontrado = true;
                                 

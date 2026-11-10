@@ -46,7 +46,9 @@ namespace ExamenFinal
 
             string fechaRegistro = DateTime.Now.ToString("yyyy-MM--dd  HH:mm");
 
-            string lineaExpediente = $"{codigoTicket} |  {nombre} | {dni} | {tipoTramite} | {direccion} | {descripcion} | {fechaRegistro}";
+            string estadoInicial = "Ingresado";
+            string lineaExpediente = $"{codigoTicket}|{nombre}|{dni}|{tipoTramite}|{direccion}|{descripcion}|{fechaRegistro}|{estadoInicial}";
+
 
             try
             {

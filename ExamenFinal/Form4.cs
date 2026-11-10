@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Windows.Forms;
 
@@ -59,6 +60,7 @@ namespace ExamenFinal
                             datos[5].Trim(),
                             datos[6].Trim(),
                             estado
+
                             );
                         }
                     }
@@ -128,7 +130,7 @@ namespace ExamenFinal
                             string descripcion = datos[5].Trim();
                             string fecha = datos[6].Trim();
 
-                          
+
                             lineas[i] = $"{codigo}|{ciudadano}|{dni}|{tipo}|{direccion}|{descripcion}|{fecha}|{nuevoEstado}";
                             break;
                         }
@@ -139,6 +141,56 @@ namespace ExamenFinal
                 MessageBox.Show($"El estado del expediente '{codigoSeleccionado}' se actualizó a: [{nuevoEstado}]", "Estado Actualizado", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                 CargarExpedientesEnTabla();
+            }
+        }
+
+        private void btnEliminarFinalizados_Click(object sender, EventArgs e)
+        {
+            DialogResult confirmacion = MessageBox.Show("Está seguro de que desea eliminar permanentemente todos los expedientes en estado 'Finalizado'?\n\nEsta acción no se puede deshacer", "Confirmación de Eliminación",
+                                        MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+            if (confirmacion != DialogResult.Yes) return;
+
+            if (File.Exists(RutaArchivo))
+            {
+                string[] lineas = File.ReadAllLines(RutaArchivo);
+                List<string> lineasGuardar = new List<string>();
+                int cantidadEliminados = 0;
+
+                foreach (string linea in lineas)
+                {
+                    if (!string.IsNullOrWhiteSpace(linea))
+                    {
+                        string[] datos = linea.Split('|');
+
+                        string estado = datos.Length >= 8 ? datos[7].Trim() : "Ingresado";
+
+                        if (estado.Equals("Finalizado", StringComparison.OrdinalIgnoreCase))
+                        {
+                            cantidadEliminados++;
+                        }
+                        else
+                        {
+                            lineasGuardar.Add(linea);
+                        }
+                    }
+                }
+                if (cantidadEliminados > 0)
+                {
+                    File.WriteAllLines(RutaArchivo, lineasGuardar);
+
+                    MessageBox.Show($"Depuración completada con éxito.\n\nSe eliminaron {cantidadEliminados} expediente(s) finalizado(s).", "Mantenimiento Realizado",
+                        MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+
+                    CargarExpedientesEnTabla();
+                }
+                else
+                {
+                    MessageBox.Show("No se encontraron expedientes en estado 'Finalizado' para eliminar.", "Sin Cambios", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+
+
             }
         }
     }

@@ -42,8 +42,9 @@
             this.Trámite = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Dirección = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Descripción = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Estado = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Fecha = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Estado = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.btnEliminarFinalizados = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
@@ -52,13 +53,14 @@
             // panel1
             // 
             this.panel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(51)))), ((int)(((byte)(51)))));
+            this.panel1.Controls.Add(this.btnEliminarFinalizados);
             this.panel1.Controls.Add(this.btnCambiarEstado);
             this.panel1.Controls.Add(this.cmbFiltroCategoria);
             this.panel1.Controls.Add(this.label1);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(1184, 66);
+            this.panel1.Size = new System.Drawing.Size(1184, 86);
             this.panel1.TabIndex = 5;
             // 
             // cmbFiltroCategoria
@@ -71,7 +73,7 @@
             "Licencia",
             "Reclamo",
             "Solicitud"});
-            this.cmbFiltroCategoria.Location = new System.Drawing.Point(475, 19);
+            this.cmbFiltroCategoria.Location = new System.Drawing.Point(222, 16);
             this.cmbFiltroCategoria.Name = "cmbFiltroCategoria";
             this.cmbFiltroCategoria.Size = new System.Drawing.Size(242, 21);
             this.cmbFiltroCategoria.TabIndex = 1;
@@ -82,7 +84,7 @@
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Century Gothic", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.label1.Location = new System.Drawing.Point(283, 19);
+            this.label1.Location = new System.Drawing.Point(59, 20);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(139, 17);
             this.label1.TabIndex = 0;
@@ -92,9 +94,9 @@
             // 
             this.panel2.Controls.Add(this.dataGridView1);
             this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel2.Location = new System.Drawing.Point(0, 66);
+            this.panel2.Location = new System.Drawing.Point(0, 86);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(1184, 595);
+            this.panel2.Size = new System.Drawing.Size(1184, 575);
             this.panel2.TabIndex = 6;
             // 
             // dataGridView1
@@ -121,8 +123,8 @@
             this.Trámite,
             this.Dirección,
             this.Descripción,
-            this.Estado,
-            this.Fecha});
+            this.Fecha,
+            this.Estado});
             dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
             dataGridViewCellStyle2.Font = new System.Drawing.Font("Century Gothic", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -139,7 +141,7 @@
             this.dataGridView1.RowHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
             this.dataGridView1.RowHeadersVisible = false;
             this.dataGridView1.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dataGridView1.Size = new System.Drawing.Size(1184, 595);
+            this.dataGridView1.Size = new System.Drawing.Size(1184, 575);
             this.dataGridView1.TabIndex = 5;
             // 
             // btnCambiarEstado
@@ -149,10 +151,10 @@
             this.btnCambiarEstado.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnCambiarEstado.Font = new System.Drawing.Font("Century Gothic", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnCambiarEstado.ForeColor = System.Drawing.Color.Gainsboro;
-            this.btnCambiarEstado.Location = new System.Drawing.Point(824, 13);
+            this.btnCambiarEstado.Location = new System.Drawing.Point(538, 8);
             this.btnCambiarEstado.Margin = new System.Windows.Forms.Padding(5, 4, 5, 4);
             this.btnCambiarEstado.Name = "btnCambiarEstado";
-            this.btnCambiarEstado.Size = new System.Drawing.Size(133, 41);
+            this.btnCambiarEstado.Size = new System.Drawing.Size(133, 54);
             this.btnCambiarEstado.TabIndex = 11;
             this.btnCambiarEstado.Text = "Cambiar Estado";
             this.btnCambiarEstado.UseVisualStyleBackColor = false;
@@ -197,17 +199,33 @@
             this.Descripción.HeaderText = "Descripción";
             this.Descripción.Name = "Descripción";
             // 
-            // Estado
-            // 
-            this.Estado.HeaderText = "Estado";
-            this.Estado.Name = "Estado";
-            // 
             // Fecha
             // 
             this.Fecha.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
             this.Fecha.HeaderText = "Fecha";
             this.Fecha.Name = "Fecha";
             this.Fecha.Width = 68;
+            // 
+            // Estado
+            // 
+            this.Estado.HeaderText = "Estado";
+            this.Estado.Name = "Estado";
+            // 
+            // btnEliminarFinalizados
+            // 
+            this.btnEliminarFinalizados.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(51)))), ((int)(((byte)(51)))));
+            this.btnEliminarFinalizados.FlatAppearance.BorderColor = System.Drawing.Color.White;
+            this.btnEliminarFinalizados.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnEliminarFinalizados.Font = new System.Drawing.Font("Century Gothic", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnEliminarFinalizados.ForeColor = System.Drawing.Color.Gainsboro;
+            this.btnEliminarFinalizados.Location = new System.Drawing.Point(730, 8);
+            this.btnEliminarFinalizados.Margin = new System.Windows.Forms.Padding(5, 4, 5, 4);
+            this.btnEliminarFinalizados.Name = "btnEliminarFinalizados";
+            this.btnEliminarFinalizados.Size = new System.Drawing.Size(197, 54);
+            this.btnEliminarFinalizados.TabIndex = 12;
+            this.btnEliminarFinalizados.Text = "Eliminar Finalizados";
+            this.btnEliminarFinalizados.UseVisualStyleBackColor = false;
+            this.btnEliminarFinalizados.Click += new System.EventHandler(this.btnEliminarFinalizados_Click);
             // 
             // Form4
             // 
@@ -240,7 +258,8 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn Trámite;
         private System.Windows.Forms.DataGridViewTextBoxColumn Dirección;
         private System.Windows.Forms.DataGridViewTextBoxColumn Descripción;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Estado;
         private System.Windows.Forms.DataGridViewTextBoxColumn Fecha;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Estado;
+        private System.Windows.Forms.Button btnEliminarFinalizados;
     }
 }

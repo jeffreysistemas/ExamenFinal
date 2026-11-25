@@ -11,7 +11,7 @@ namespace ExamenFinal
         public string codigo;
         public string ciudadano;
         public int dni;
-        public string tipoTramite;
+        public string tipodeTramite;
         public string direccion;
         public string descripcion;
         public string fecha;

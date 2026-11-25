@@ -1,32 +1,30 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 using System.IO;
+using System.Linq;
+using System.Windows.Forms;
 
 namespace ExamenFinal
 {
-    public partial class FormRegistro : System.Windows.Forms.Form
-
+    public partial class Form3 : Form
     {
         private const string RutaArchivo = "expedientes_olivos.dat";
-        public FormRegistro()
+
+        public Form3()
         {
             InitializeComponent();
+            
+
         }
 
         private string GenerarCodigoTicket()
         {
             Random rand = new Random();
             int numeroAleatorio = rand.Next(1000, 9999);
-            return $"EXP - {numeroAleatorio}";
+            return $"EXP-{numeroAleatorio}";
         }
 
+
+       
         private bool TicketExiste(string codigoBuscado)
         {
             if (!File.Exists(RutaArchivo)) return false;
@@ -36,20 +34,20 @@ namespace ExamenFinal
 
             try
             {
-                br = new BinaryReader(new FileStream(RutaArchivo, FileMode.Open, FileAccess.Read));
+                br = new BinaryReader(new FileStream(RutaArchivo, FileMode.Open, FileAccess.Read, FileShare.ReadWrite));
                 Expediente exp = new Expediente();
 
                 while (br.BaseStream.Position != br.BaseStream.Length)
                 {
-                    exp.codigo = br.ReadString();
-                    exp.ciudadano = br.ReadString();
-                    exp.dni = br.ReadInt32();
+                    exp.codigo        = br.ReadString();
+                    exp.ciudadano     = br.ReadString();
+                    exp.dni           = br.ReadInt32();
                     exp.tipodeTramite = br.ReadString();
-                    exp.direccion = br.ReadString();
-                    exp.descripcion = br.ReadString();
-                    exp.fecha = br.ReadString();
-                    exp.estado = br.ReadString();
-                    exp.esUrgente = br.ReadBoolean();
+                    exp.direccion     = br.ReadString();
+                    exp.descripcion   = br.ReadString();
+                    exp.fecha         = br.ReadString();
+                    exp.estado        = br.ReadString();
+                    exp.esUrgente     = br.ReadBoolean();
 
                     if (exp.codigo == codigoBuscado)
                     {
@@ -60,7 +58,7 @@ namespace ExamenFinal
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Error al verificar ticket: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Error al verificar ticket en el archivo: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             finally
             {
@@ -72,7 +70,6 @@ namespace ExamenFinal
 
         private void btnRegistrar_Click(object sender, EventArgs e)
         {
-
             if (string.IsNullOrWhiteSpace(txtCiudadano.Text) ||
                 string.IsNullOrWhiteSpace(txtDni.Text) ||
                 cmbTipodeTramite.SelectedIndex == -1 ||
@@ -97,23 +94,22 @@ namespace ExamenFinal
             } while (TicketExiste(codigoTicket));
 
             Expediente nuevoExp = new Expediente();
-            nuevoExp.codigo = codigoTicket;
-            nuevoExp.ciudadano = txtCiudadano.Text.Trim();
-            nuevoExp.dni = dniNumero;
+            nuevoExp.codigo        = codigoTicket;
+            nuevoExp.ciudadano     = txtCiudadano.Text.Trim();
+            nuevoExp.dni           = dniNumero;
             nuevoExp.tipodeTramite = cmbTipodeTramite.SelectedItem.ToString();
-            nuevoExp.direccion = txtDireccion.Text.Trim();
-            nuevoExp.descripcion = txtDescripcion.Text.Trim();
-            nuevoExp.fecha = DateTime.Now.ToString("dd/MM/yyyy HH:mm");
-            nuevoExp.estado = "Ingresado";
-
-            nuevoExp.esUrgente = nuevoExp.tipodeTramite.IndexOf("Reclamo", StringComparison.OrdinalIgnoreCase) >= 0;
+            nuevoExp.direccion     = txtDireccion.Text.Trim();
+            nuevoExp.descripcion   = txtDescripcion.Text.Trim();
+            nuevoExp.fecha         = DateTime.Now.ToString("dd/MM/yyyy HH:mm");
+            nuevoExp.estado        = "Ingresado";
+            nuevoExp.esUrgente     = nuevoExp.tipodeTramite.IndexOf("Reclamo", StringComparison.OrdinalIgnoreCase) >= 0;
 
             BinaryWriter bw = null;
-
+            bool guardadoExitoso = false;
 
             try
             {
-                bw = new BinaryWriter(new FileStream(RutaArchivo, FileMode.Append, FileAccess.Write));
+                bw = new BinaryWriter(new FileStream(RutaArchivo, FileMode.Append, FileAccess.Write, FileShare.ReadWrite));
 
                 bw.Write(nuevoExp.codigo);
                 bw.Write(nuevoExp.ciudadano);
@@ -124,15 +120,8 @@ namespace ExamenFinal
                 bw.Write(nuevoExp.fecha);
                 bw.Write(nuevoExp.estado);
                 bw.Write(nuevoExp.esUrgente);
-                MessageBox.Show($"¡Expediente registrado con éxito!\nCódigo de Ticket: {nuevoExp.codigo}",
-                                "Mesa de Partes - Registro", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                LimpiarCampos();
 
-                FormDashboard dashboard = Application.OpenForms.OfType<FormDashboard>().FirstOrDefault();
-                if (dashboard != null)
-                {
-                    dashboard.AbrirFormularioEnPanel<Form4>();
-                }
+                guardadoExitoso = true;
             }
             catch (Exception ex)
             {
@@ -141,6 +130,20 @@ namespace ExamenFinal
             finally
             {
                 if (bw != null) bw.Close();
+            }
+
+            if (guardadoExitoso)
+            {
+                MessageBox.Show($"¡Expediente registrado con éxito!\nCódigo asignado: {nuevoExp.codigo}",
+                                "Mesa de Partes - Registro", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                LimpiarCampos();
+
+                FormDashboard dashboard = Application.OpenForms.OfType<FormDashboard>().FirstOrDefault();
+                if (dashboard != null)
+                {
+                    dashboard.AbrirFormularioEnPanel<Form4>();
+                }
             }
         }
 
@@ -152,11 +155,6 @@ namespace ExamenFinal
             txtDireccion.Clear();
             txtDescripcion.Clear();
             txtCiudadano.Focus();
-        }
-
-        private void button2_Click(object sender, EventArgs e)
-        {
-           
         }
     }
 }

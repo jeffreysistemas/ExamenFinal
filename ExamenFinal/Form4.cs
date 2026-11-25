@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Windows.Forms;
 
@@ -7,13 +6,12 @@ namespace ExamenFinal
 {
     public partial class Form4 : Form
     {
-
         private const string RutaArchivo = "expedientes_olivos.dat";
 
         public Form4()
         {
             InitializeComponent();
-            
+            CargarExpedientesEnTabla();
         }
 
         private void Form4_Load(object sender, EventArgs e)
@@ -39,7 +37,7 @@ namespace ExamenFinal
             BinaryReader br = null;
             try
             {
-                br = new BinaryReader(new FileStream(RutaArchivo, FileMode.Open, FileAccess.Read));
+                br = new BinaryReader(new FileStream(RutaArchivo, FileMode.Open, FileAccess.Read, FileShare.ReadWrite));
                 Expediente exp = new Expediente();
 
                 while (br.BaseStream.Position != br.BaseStream.Length)
@@ -54,7 +52,6 @@ namespace ExamenFinal
                     exp.estado = br.ReadString();
                     exp.esUrgente = br.ReadBoolean();
 
-
                     if (filtro == "[Todos]" || exp.tipodeTramite.IndexOf(filtro, StringComparison.OrdinalIgnoreCase) >= 0)
                     {
                         dataGridView1.Rows.Add(
@@ -68,7 +65,6 @@ namespace ExamenFinal
                             exp.estado
                         );
                     }
-
                 }
             }
             catch (Exception ex)
@@ -98,9 +94,8 @@ namespace ExamenFinal
 
             string codigoObjetivo = dataGridView1.SelectedRows[0].Cells[0].Value.ToString();
             string estadoActual = dataGridView1.SelectedRows[0].Cells[7].Value.ToString();
+
             string nuevoEstado = "Ingresado";
-
-
             if (estadoActual == "Ingresado") nuevoEstado = "En Proceso";
             else if (estadoActual == "En Proceso") nuevoEstado = "Finalizado";
             else
@@ -109,17 +104,14 @@ namespace ExamenFinal
                 return;
             }
 
-
             BinaryReader br = null;
             BinaryWriter bw_aux = null;
             string fic_temp = "temporal.dat";
             bool bandera = false;
 
-
-
             try
             {
-                br = new BinaryReader(new FileStream(RutaArchivo, FileMode.Open, FileAccess.Read));
+                br = new BinaryReader(new FileStream(RutaArchivo, FileMode.Open, FileAccess.Read, FileShare.ReadWrite));
                 bw_aux = new BinaryWriter(new FileStream(fic_temp, FileMode.Create, FileAccess.Write));
 
                 Expediente exp = new Expediente();
@@ -193,7 +185,7 @@ namespace ExamenFinal
 
             try
             {
-                br = new BinaryReader(new FileStream(RutaArchivo, FileMode.Open, FileAccess.Read));
+                br = new BinaryReader(new FileStream(RutaArchivo, FileMode.Open, FileAccess.Read, FileShare.ReadWrite));
                 bw_aux = new BinaryWriter(new FileStream(fic_temp, FileMode.Create, FileAccess.Write));
 
                 Expediente exp = new Expediente();
@@ -253,7 +245,6 @@ namespace ExamenFinal
             {
                 MessageBox.Show("No hay expedientes en estado 'Finalizado' para eliminar.", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
-
         }
     }
 }

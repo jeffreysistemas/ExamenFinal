@@ -77,7 +77,7 @@ namespace ExamenFinal
 
         private void btnNuevoTramite_Click(object sender, EventArgs e)
         {
-            AbrirFormularioEnPanel<FormRegistro>();
+            AbrirFormularioEnPanel<Form3>();
         }
 
         private void btnClose_Click(object sender, EventArgs e)

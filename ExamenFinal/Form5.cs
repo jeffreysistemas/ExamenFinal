@@ -1,20 +1,17 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
+using System.Drawing.Printing;
 using System.IO;
+using System.Windows.Forms;
 
 namespace ExamenFinal
 {
     public partial class Form5 : Form
     {
+        private const string RutaArchivo = "expedientes_olivos.dat";
+        private Expediente expedienteEncontrado;
+        private bool hayExpedienteCargado = false;
 
-        private const string RutaArchivo = "expediente_olivos.txt";
         public Form5()
         {
             InitializeComponent();
@@ -41,202 +38,233 @@ namespace ExamenFinal
             dgvResultadoTicket.DefaultCellStyle.Font = new Font("Century Gothic", 9F, FontStyle.Bold);
             dgvResultadoTicket.ColumnHeadersDefaultCellStyle.Font = new Font("Century Gothic", 10F, FontStyle.Bold);
 
-
             dgvResultadoTicket.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             dgvResultadoTicket.ReadOnly = true;
-
             dgvResultadoTicket.DefaultCellStyle.WrapMode = DataGridViewTriState.True;
-
             dgvResultadoTicket.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
 
             if (dgvResultadoTicket.Columns["Descripción"] != null)
             {
                 dgvResultadoTicket.Columns["Descripción"].DefaultCellStyle.WrapMode = DataGridViewTriState.True;
             }
-
         }
-
 
         private void CargarTodosLosTickets()
         {
-
             dgvResultadoTicket.Rows.Clear();
+            hayExpedienteCargado = false;
 
-            if (File.Exists(RutaArchivo))
+            if (!File.Exists(RutaArchivo)) return;
+
+            BinaryReader br = null;
+            try
             {
-                string[] lineas = File.ReadAllLines(RutaArchivo);
+                br = new BinaryReader(new FileStream(RutaArchivo, FileMode.Open, FileAccess.Read, FileShare.ReadWrite));
+                Expediente exp = new Expediente();
 
-                foreach (string linea in lineas)
+                while (br.BaseStream.Position != br.BaseStream.Length)
                 {
+                    exp.codigo = br.ReadString();
+                    exp.ciudadano = br.ReadString();
+                    exp.dni = br.ReadInt32();
+                    exp.tipodeTramite = br.ReadString();
+                    exp.direccion = br.ReadString();
+                    exp.descripcion = br.ReadString();
+                    exp.fecha = br.ReadString();
+                    exp.estado = br.ReadString();
+                    exp.esUrgente = br.ReadBoolean();
 
-                    if (!string.IsNullOrWhiteSpace(linea))
-                    {
-                        string[] datos = linea.Split('|');
-
-                        if (datos.Length >= 7)
-                        {
-                            string estado = datos.Length >= 8 ? datos[7].Trim() : "Ingresado";
-                            dgvResultadoTicket.Rows.Add(
-                                datos[0].Trim(),
-                                datos[1].Trim(),
-                                datos[2].Trim(),
-                                datos[3].Trim(),
-                                datos[4].Trim(),
-                                datos[5].Trim(),
-                                datos[6].Trim(),
-                                estado
-                                );
-
-                        }
-                    }
-
+                    dgvResultadoTicket.Rows.Add(
+                        exp.codigo,
+                        exp.ciudadano,
+                        exp.dni.ToString("D8"),
+                        exp.tipodeTramite,
+                        exp.direccion,
+                        exp.descripcion,
+                        exp.fecha,
+                        exp.estado
+                    );
                 }
             }
-
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error al cargar expedientes binarios: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            finally
+            {
+                if (br != null) br.Close();
+            }
         }
 
         private void btnBuscarTicket_Click(object sender, EventArgs e)
         {
-            string CodigoBuscado = txtBuscarTicket.Text.Trim();
+            string CodigoBuscado = txtBuscarTicket.Text.Trim().ToUpper().Replace(" ", "");
 
             if (string.IsNullOrWhiteSpace(CodigoBuscado))
             {
-                MessageBox.Show("Por favor Ingrese un Código de Ticket para realizar la Búsqueda", "Campo Vacio", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Ingrese un código de expediente para buscar.", "Campo Vacío", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 txtBuscarTicket.Focus();
                 return;
-
             }
-            string busquedaLimpia = CodigoBuscado.Replace(" ", "");
+
+            if (int.TryParse(CodigoBuscado, out _))
+            {
+                CodigoBuscado = "EXP-" + CodigoBuscado;
+            }
+
+            if (!File.Exists(RutaArchivo))
+            {
+                MessageBox.Show("Aún no existen expedientes registrados en el sistema.", "Sin Registros", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
 
             dgvResultadoTicket.Rows.Clear();
-            bool encontrado = false;
+            hayExpedienteCargado = false;
 
-            if (File.Exists(RutaArchivo))
+            BinaryReader br = null;
+            bool band = false;
+
+            try
             {
-                string[] lineas = File.ReadAllLines(RutaArchivo);
+                br = new BinaryReader(new FileStream(RutaArchivo, FileMode.Open, FileAccess.Read, FileShare.ReadWrite));
+                Expediente exp = new Expediente();
 
-                foreach (string linea in lineas)
+                while (br.BaseStream.Position != br.BaseStream.Length)
                 {
-                    if (!string.IsNullOrWhiteSpace(linea))
+                    exp.codigo = br.ReadString();
+                    exp.ciudadano = br.ReadString();
+                    exp.dni = br.ReadInt32();
+                    exp.tipodeTramite = br.ReadString();
+                    exp.direccion = br.ReadString();
+                    exp.descripcion = br.ReadString();
+                    exp.fecha = br.ReadString();
+                    exp.estado = br.ReadString();
+                    exp.esUrgente = br.ReadBoolean();
+
+                    if (exp.codigo.ToUpper().Replace(" ", "") == CodigoBuscado)
                     {
-                        string[] datos = linea.Split('|');
+                        band = true;
+                        expedienteEncontrado = exp;
+                        hayExpedienteCargado = true;
 
-                        if (datos.Length >= 7)
-                        {
-
-
-                            string codigoEnArchivo = datos[0].Trim();
-                            string codigoSinEspacios = codigoEnArchivo.Replace(" ", "");
-
-
-                            if (codigoSinEspacios.Equals(busquedaLimpia, StringComparison.OrdinalIgnoreCase) ||
-                                codigoEnArchivo.IndexOf(CodigoBuscado, StringComparison.OrdinalIgnoreCase) >= 0)
-                            {
-                                string estado = datos.Length >= 8 ? datos[7].Trim() : "Ingresado";
-                                dgvResultadoTicket.Rows.Add(
-                                    datos[0].Trim(),
-                                    datos[1].Trim(),
-                                    datos[2].Trim(),
-                                    datos[3].Trim(),
-                                    datos[4].Trim(),
-                                    datos[5].Trim(),
-                                    datos[6].Trim(),
-                                    estado
-                                    );
-
-
-                                encontrado = true;
-
-                            }
-                        }
+                        dgvResultadoTicket.Rows.Add(
+                            exp.codigo,
+                            exp.ciudadano,
+                            exp.dni.ToString("D8"),
+                            exp.tipodeTramite,
+                            exp.direccion,
+                            exp.descripcion,
+                            exp.fecha,
+                            exp.estado
+                        );
+                        break;
                     }
                 }
+
+                if (!band)
+                {
+                    MessageBox.Show($"No se encontró ningún expediente con el código '{CodigoBuscado}'.", "Búsqueda Sin Resultados", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
             }
-            if (!encontrado)
+            catch (Exception ex)
             {
-                MessageBox.Show($"No se encontraron ningún expediente registrado con el código '{CodigoBuscado}'.", "Sin coincidencias", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                CargarTodosLosTickets();
+                MessageBox.Show("Error al buscar en el archivo binario: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            finally
+            {
+                if (br != null) br.Close();
             }
         }
-
         private void btnLimpiarBusqueda_Click(object sender, EventArgs e)
         {
             txtBuscarTicket.Clear();
             CargarTodosLosTickets();
             txtBuscarTicket.Focus();
-
-        }
-        private void btnImprimirConstancia_Click(object sender, EventArgs e)
-        {
-            if (dgvResultadoTicket.CurrentRow == null || dgvResultadoTicket.CurrentRow.Index < 0)
-            {
-                MessageBox.Show(
-                    "Por favor, seleccione un expediente de la tabla para generar su constancia.",
-                    "Selección Requerida",
-                    MessageBoxButtons.OK,
-                    MessageBoxIcon.Warning
-                );
-                return;
-            }
-
-            DataGridViewRow fila = dgvResultadoTicket.CurrentRow;
-
-            string codigo = fila.Cells[0].Value != null ? fila.Cells[0].Value.ToString() : "";
-            string ciudadano = fila.Cells[1].Value != null ? fila.Cells[1].Value.ToString() : "";
-            string dni = fila.Cells[2].Value != null ? fila.Cells[2].Value.ToString() : "";
-            string tipo = fila.Cells[3].Value != null ? fila.Cells[3].Value.ToString() : "";
-            string direccion = fila.Cells[4].Value != null ? fila.Cells[4].Value.ToString() : "";
-            string descripcion = fila.Cells[5].Value != null ? fila.Cells[5].Value.ToString() : "";
-            string fecha = fila.Cells[6].Value != null ? fila.Cells[6].Value.ToString() : "";
-
-
-            string estado = fila.Cells.Count >= 8 && fila.Cells[7].Value != null
-                    ? fila.Cells[7].Value.ToString()
-                    : "Ingresado";
-
-            string ticketTexto =
-          "=======================================\n" +
-          "        MUNICIPALIDAD DE LOS OLIVOS\n" +
-          "    MESA DE PARTES DIGITAL - CONSTANCIA OFICIAL\n" +
-          "=======================================\n" +
-          $" CÓDIGO TICKET : {codigo}\n" +
-          $" FECHA REGISTRO: {fecha}\n" +
-          $" ESTADO ACTUAL : {estado}\n\n" +
-          " DATOS DEL CIUDADANO:\n" +
-          " ---------------------------------------\n" +
-          $" Nombre        : {ciudadano}\n" +
-          $" DNI           : {dni}\n" +
-          $" Dirección     : {direccion}\n\n" +
-          " DETALLE DE LA SOLICITUD:\n" +
-          " ---------------------------------------\n" +
-          $" Tipo Trámite  : {tipo}\n" +
-          $" Descripción   : {descripcion}\n\n" +
-          "=======================================\n" +
-          " Conserve este documento para realizar el seguimiento\n" +
-          " de su trámite en la plataforma institucional.\n" +
-          "=======================================";
-
-
-            MessageBox.Show(ticketTexto, $"Constancia Oficial - {codigo}", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
         }
 
         private void dgvResultadoTicket_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
             if (e.RowIndex >= 0)
             {
-                string codigo = dgvResultadoTicket.Rows[e.RowIndex].Cells["Código"].Value?.ToString();
-                string ciudadano = dgvResultadoTicket.Rows[e.RowIndex].Cells["Ciudadano"].Value?.ToString();
-                string descripcion = dgvResultadoTicket.Rows[e.RowIndex].Cells["Descripción"].Value?.ToString();
-                
+                expedienteEncontrado.codigo = dgvResultadoTicket.Rows[e.RowIndex].Cells[0].Value.ToString();
+                expedienteEncontrado.ciudadano = dgvResultadoTicket.Rows[e.RowIndex].Cells[1].Value.ToString();
+                expedienteEncontrado.dni = int.Parse(dgvResultadoTicket.Rows[e.RowIndex].Cells[2].Value.ToString());
+                expedienteEncontrado.tipodeTramite = dgvResultadoTicket.Rows[e.RowIndex].Cells[3].Value.ToString();
+                expedienteEncontrado.direccion = dgvResultadoTicket.Rows[e.RowIndex].Cells[4].Value.ToString();
+                expedienteEncontrado.descripcion = dgvResultadoTicket.Rows[e.RowIndex].Cells[5].Value.ToString();
+                expedienteEncontrado.fecha = dgvResultadoTicket.Rows[e.RowIndex].Cells[6].Value.ToString();
+                expedienteEncontrado.estado = dgvResultadoTicket.Rows[e.RowIndex].Cells[7].Value.ToString();
+                expedienteEncontrado.esUrgente = expedienteEncontrado.tipodeTramite.IndexOf("Reclamo", StringComparison.OrdinalIgnoreCase) >= 0;
+                hayExpedienteCargado = true;
 
-
-                string detalle = $"CÓDIGO: {codigo}\n" +
-                                 $"CIUDADANO: {ciudadano}\n\n" +
-                                 $"DESCRIPCIÓN COMPLETA:\n{descripcion}";
-
-                MessageBox.Show(detalle, "Detalle completo del expediente", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show($"Expediente {expedienteEncontrado.codigo} seleccionado para imprimir constancia.", "Seleccionado", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
-     }
+
+        private void btnImprimirConstancia_Click(object sender, EventArgs e)
+        {
+            if (!hayExpedienteCargado)
+            {
+                MessageBox.Show("Primero busque o seleccione con doble clic un expediente válido antes de imprimir su constancia.", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            PrintDocument pd = new PrintDocument();
+            pd.PrintPage += ImprimirConstancia_PrintPage;
+
+            PrintPreviewDialog vistaPrevia = new PrintPreviewDialog();
+            vistaPrevia.Document = pd;
+            vistaPrevia.Width = 800;
+            vistaPrevia.Height = 600;
+            vistaPrevia.ShowDialog();
+        }
+
+        private void ImprimirConstancia_PrintPage(object sender, PrintPageEventArgs e)
+        {
+            Graphics g = e.Graphics;
+            Font fuenteTitulo = new Font("Segoe UI", 16, FontStyle.Bold);
+            Font fuenteSubtitulo = new Font("Segoe UI", 11, FontStyle.Bold);
+            Font fuenteCuerpo = new Font("Segoe UI", 10, FontStyle.Regular);
+            Font fuenteNegrita = new Font("Segoe UI", 10, FontStyle.Bold);
+
+            int x = 60;
+            int y = 60;
+
+            g.DrawString("MUNICIPALIDAD DISTRITAL DE LOS OLIVOS", fuenteTitulo, Brushes.DarkBlue, x, y);
+            y += 30;
+            g.DrawString("MESA DE PARTES DIGITAL - CONSTANCIA DE TRÁMITE", fuenteSubtitulo, Brushes.DimGray, x, y);
+            y += 25;
+            g.DrawLine(Pens.Black, x, y, 750, y);
+            y += 25;
+
+            g.DrawString($"Código de Expediente: {expedienteEncontrado.codigo}", fuenteNegrita, Brushes.Black, x, y);
+            y += 25;
+            g.DrawString($"Fecha y Hora de Ingreso: {expedienteEncontrado.fecha}", fuenteCuerpo, Brushes.Black, x, y);
+            y += 25;
+            g.DrawString($"Estado Actual: {expedienteEncontrado.estado}", fuenteNegrita, Brushes.DarkGreen, x, y);
+            y += 25;
+            g.DrawString($"Prioridad: {(expedienteEncontrado.esUrgente ? "URGENTE" : "NORMAL")}", fuenteCuerpo, Brushes.Black, x, y);
+            y += 35;
+
+            g.DrawString("DATOS DEL SOLICITANTE", fuenteSubtitulo, Brushes.DarkBlue, x, y);
+            y += 25;
+            g.DrawString($"Ciudadano: {expedienteEncontrado.ciudadano}", fuenteCuerpo, Brushes.Black, x, y);
+            y += 25;
+            g.DrawString($"DNI: {expedienteEncontrado.dni:D8}", fuenteCuerpo, Brushes.Black, x, y);
+            y += 25;
+            g.DrawString($"Dirección: {expedienteEncontrado.direccion}", fuenteCuerpo, Brushes.Black, x, y);
+            y += 35;
+
+            g.DrawString("DETALLE DEL EXPEDIENTE", fuenteSubtitulo, Brushes.DarkBlue, x, y);
+            y += 25;
+            g.DrawString($"Tipo de Trámite: {expedienteEncontrado.tipodeTramite}", fuenteCuerpo, Brushes.Black, x, y);
+            y += 25;
+            g.DrawString($"Descripción / Asunto: {expedienteEncontrado.descripcion}", fuenteCuerpo, Brushes.Black, x, y);
+            y += 50;
+
+            g.DrawLine(Pens.Gray, x, y, 750, y);
+            y += 15;
+            g.DrawString("Documento generado electrónicamente por el Sistema de Trámite Documentario.", fuenteCuerpo, Brushes.Gray, x, y);
+        }
+    }
 }

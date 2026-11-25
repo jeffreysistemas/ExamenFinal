@@ -1,12 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Windows.Forms.DataVisualization.Charting;
 
@@ -14,13 +7,12 @@ namespace ExamenFinal
 {
     public partial class Form6 : Form
     {
-        private const string RutaArchivo = "expediente_olivos.txt";
+        private const string RutaArchivo = "expedientes_olivos.dat";
+
         public Form6()
         {
             InitializeComponent();
-            CargarEstadisticas();
         }
-       
 
         private void CargarEstadisticas()
         {
@@ -30,36 +22,54 @@ namespace ExamenFinal
                 return;
             }
 
-            string[] lineas = File.ReadAllLines(RutaArchivo);
-
             int totalLicencias = 0;
             int totalReclamos = 0;
             int totalSolicitudes = 0;
             int totalOtros = 0;
 
-            foreach (string linea in lineas)
+            BinaryReader br = null;
+            try
             {
-                if (!string.IsNullOrWhiteSpace(linea))
-                {
-                    string[] datos = linea.Split('|');
-                    if (datos.Length >= 4)
-                    {
-                        string tipo = datos[3].Trim();
+                br = new BinaryReader(new FileStream(RutaArchivo, FileMode.Open, FileAccess.Read, FileShare.ReadWrite));
+                Expediente exp = new Expediente();
 
-                        if (tipo.StartsWith("Licencia", StringComparison.OrdinalIgnoreCase))
-                            totalLicencias++;
-                        else if (tipo.StartsWith("Reclamo", StringComparison.OrdinalIgnoreCase))
-                            totalReclamos++;
-                        else if (tipo.StartsWith("Solicitud", StringComparison.OrdinalIgnoreCase))
-                            totalSolicitudes++;
-                        else
-                            totalOtros++;
-                    }
+                while (br.BaseStream.Position != br.BaseStream.Length)
+                {
+                    exp.codigo = br.ReadString();
+                    exp.ciudadano = br.ReadString();
+                    exp.dni = br.ReadInt32();
+                    exp.tipodeTramite = br.ReadString();
+                    exp.direccion = br.ReadString();
+                    exp.descripcion = br.ReadString();
+                    exp.fecha = br.ReadString();
+                    exp.estado = br.ReadString();
+                    exp.esUrgente = br.ReadBoolean();
+
+                    string tipo = exp.tipodeTramite.Trim();
+
+                    if (tipo.StartsWith("Licencia", StringComparison.OrdinalIgnoreCase))
+                        totalLicencias++;
+                    else if (tipo.StartsWith("Reclamo", StringComparison.OrdinalIgnoreCase))
+                        totalReclamos++;
+                    else if (tipo.StartsWith("Solicitud", StringComparison.OrdinalIgnoreCase))
+                        totalSolicitudes++;
+                    else
+                        totalOtros++;
                 }
             }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error al leer estadísticas binarias: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            finally
+            {
+                if (br != null) br.Close();
+            }
+
             ConfigurarGraficoPie(totalLicencias, totalReclamos, totalSolicitudes, totalOtros);
             GenerarGraficoBarras(totalLicencias, totalReclamos, totalSolicitudes, totalOtros);
         }
+
         private void ConfigurarGraficoPie(int licencias, int reclamos, int solicitudes, int otros)
         {
             chartTipoTramite.Series.Clear();
@@ -78,10 +88,8 @@ namespace ExamenFinal
             if (solicitudes > 0) serie.Points.AddXY("Solicitudes", solicitudes);
             if (otros > 0) serie.Points.AddXY("Otros", otros);
 
-
             chartTipoTramite.Series.Add(serie);
         }
-
 
         private void GenerarGraficoBarras(int licencias, int reclamos, int solicitudes, int otros)
         {

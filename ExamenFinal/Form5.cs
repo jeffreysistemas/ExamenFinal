@@ -228,6 +228,7 @@ namespace ExamenFinal
                 string codigo = dgvResultadoTicket.Rows[e.RowIndex].Cells["Código"].Value?.ToString();
                 string ciudadano = dgvResultadoTicket.Rows[e.RowIndex].Cells["Ciudadano"].Value?.ToString();
                 string descripcion = dgvResultadoTicket.Rows[e.RowIndex].Cells["Descripción"].Value?.ToString();
+                
 
 
                 string detalle = $"CÓDIGO: {codigo}\n" +

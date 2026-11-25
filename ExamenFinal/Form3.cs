@@ -14,7 +14,7 @@ namespace ExamenFinal
     public partial class FormRegistro : System.Windows.Forms.Form
 
     {
-        private const string RutaArchivo = "expediente_olivos.txt";
+        private const string RutaArchivo = "expedientes_olivos.dat";
         public FormRegistro()
         {
             InitializeComponent();
@@ -27,36 +27,107 @@ namespace ExamenFinal
             return $"EXP - {numeroAleatorio}";
         }
 
+        private bool TicketExiste(string codigoBuscado)
+        {
+            if (!File.Exists(RutaArchivo)) return false;
+
+            BinaryReader br = null;
+            bool existe = false;
+
+            try
+            {
+                br = new BinaryReader(new FileStream(RutaArchivo, FileMode.Open, FileAccess.Read));
+                Expediente exp = new Expediente();
+
+                while (br.BaseStream.Position != br.BaseStream.Length)
+                {
+                    exp.codigo = br.ReadString();
+                    exp.ciudadano = br.ReadString();
+                    exp.dni = br.ReadInt32();
+                    exp.tipodeTramite = br.ReadString();
+                    exp.direccion = br.ReadString();
+                    exp.descripcion = br.ReadString();
+                    exp.fecha = br.ReadString();
+                    exp.estado = br.ReadString();
+                    exp.esUrgente = br.ReadBoolean();
+
+                    if (exp.codigo == codigoBuscado)
+                    {
+                        existe = true;
+                        break;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error al verificar ticket: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            finally
+            {
+                if (br != null) br.Close();
+            }
+
+            return existe;
+        }
+
         private void btnRegistrar_Click(object sender, EventArgs e)
         {
 
-            string nombre = txtCiudadano.Text.Trim();
-            string dni = txtDni.Text.Trim();
-            string tipoTramite = cmbTipodeTramite.SelectedItem != null ? cmbTipodeTramite.SelectedItem.ToString() : "";
-            string direccion = txtDireccion.Text.Trim();
-            string descripcion  = txtDescripcion.Text.Trim();
-
-            if (string.IsNullOrWhiteSpace(nombre) || string.IsNullOrWhiteSpace(dni) || string.IsNullOrWhiteSpace(tipoTramite) || string.IsNullOrWhiteSpace(direccion) || string.IsNullOrWhiteSpace(descripcion))
+            if (string.IsNullOrWhiteSpace(txtCiudadano.Text) ||
+                string.IsNullOrWhiteSpace(txtDni.Text) ||
+                cmbTipodeTramite.SelectedIndex == -1 ||
+                string.IsNullOrWhiteSpace(txtDireccion.Text) ||
+                string.IsNullOrWhiteSpace(txtDescripcion.Text))
             {
-                MessageBox.Show("Por favor, complete todos los campos obligatorios antes de registrar" , "Campos incompletos" , MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Por favor, complete todos los campos obligatorios.", "Campos Incompletos", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
-            string codigoTicket = GenerarCodigoTicket();
+            if (!int.TryParse(txtDni.Text.Trim(), out int dniNumero) || txtDni.Text.Trim().Length != 8)
+            {
+                MessageBox.Show("El DNI debe contener exactamente 8 dígitos numéricos.", "DNI Inválido", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                txtDni.Focus();
+                return;
+            }
 
-            string fechaRegistro = DateTime.Now.ToString("yyyy-MM--dd  HH:mm");
+            string codigoTicket;
+            do
+            {
+                codigoTicket = GenerarCodigoTicket();
+            } while (TicketExiste(codigoTicket));
 
-            string estadoInicial = "Ingresado";
-            string lineaExpediente = $"{codigoTicket}|{nombre}|{dni}|{tipoTramite}|{direccion}|{descripcion}|{fechaRegistro}|{estadoInicial}";
+            Expediente nuevoExp = new Expediente();
+            nuevoExp.codigo = codigoTicket;
+            nuevoExp.ciudadano = txtCiudadano.Text.Trim();
+            nuevoExp.dni = dniNumero;
+            nuevoExp.tipodeTramite = cmbTipodeTramite.SelectedItem.ToString();
+            nuevoExp.direccion = txtDireccion.Text.Trim();
+            nuevoExp.descripcion = txtDescripcion.Text.Trim();
+            nuevoExp.fecha = DateTime.Now.ToString("dd/MM/yyyy HH:mm");
+            nuevoExp.estado = "Ingresado";
+
+            nuevoExp.esUrgente = nuevoExp.tipodeTramite.IndexOf("Reclamo", StringComparison.OrdinalIgnoreCase) >= 0;
+
+            BinaryWriter bw = null;
 
 
             try
             {
-                File.AppendAllText(RutaArchivo, lineaExpediente + Environment.NewLine);
+                bw = new BinaryWriter(new FileStream(RutaArchivo, FileMode.Append, FileAccess.Write));
 
-                MessageBox.Show($"¡Expediente registrado con éxito!\n\nCódigo asignado: {codigoTicket}", "Registro Exitoso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                bw.Write(nuevoExp.codigo);
+                bw.Write(nuevoExp.ciudadano);
+                bw.Write(nuevoExp.dni);
+                bw.Write(nuevoExp.tipodeTramite);
+                bw.Write(nuevoExp.direccion);
+                bw.Write(nuevoExp.descripcion);
+                bw.Write(nuevoExp.fecha);
+                bw.Write(nuevoExp.estado);
+                bw.Write(nuevoExp.esUrgente);
+                MessageBox.Show($"¡Expediente registrado con éxito!\nCódigo de Ticket: {nuevoExp.codigo}",
+                                "Mesa de Partes - Registro", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                LimpiarCampos();
 
-               
                 FormDashboard dashboard = Application.OpenForms.OfType<FormDashboard>().FirstOrDefault();
                 if (dashboard != null)
                 {
@@ -65,11 +136,22 @@ namespace ExamenFinal
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Ocurrio un error al guardar el archivo : " + ex.Message, "Error de Persistencia", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Error al escribir en el archivo binario: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+            finally
+            {
+                if (bw != null) bw.Close();
+            }
+        }
 
-
-      
+        private void LimpiarCampos()
+        {
+            txtCiudadano.Clear();
+            txtDni.Clear();
+            cmbTipodeTramite.SelectedIndex = -1;
+            txtDireccion.Clear();
+            txtDescripcion.Clear();
+            txtCiudadano.Focus();
         }
 
         private void button2_Click(object sender, EventArgs e)

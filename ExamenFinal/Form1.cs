@@ -16,7 +16,7 @@ namespace ExamenFinal
     {
         public Form1()
         {
-            InitializeComponent();  
+            InitializeComponent();
         }
 
         [DllImport("user32.DLL", EntryPoint = "ReleaseCapture")]
@@ -30,13 +30,25 @@ namespace ExamenFinal
             ReleaseCapture();
             SendMessage(this.Handle, 0x112, 0xf012, 0);
         }
-        private void panelCabecera_MouseDown(object sender, MouseEventArgs e)
+
+        private void panel2_MouseDown(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Left)
             {
                 MoverVentana();
             }
+
         }
+        private void pictureBox4_MouseDown(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Left)
+            {
+                MoverVentana();
+            }
+
+        }
+
+
 
 
         private void btnLogin_Click(object sender, EventArgs e)
@@ -46,14 +58,16 @@ namespace ExamenFinal
 
             if (usuario == "admin" && password == "1234")
             {
-                MessageBox.Show("¡ Acceso correcto ! Bienvenido al sistema.");
+                MessageBox.Show("¡ Acceso correcto ! Bienvenido al sistema." , " Welcome !" , MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                 AbrirDashboardUnico();
-                
+
             }
             else
             {
-                MessageBox.Show("Usuario o contraseña incorrecta. Intente nuevamente");
+                MessageBox.Show("Usuario o contraseña incorrecta. Intente nuevamente", "Error de Autenticación", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+
 
                 txtUser.Clear();
                 txtPassword.Clear();
@@ -77,7 +91,7 @@ namespace ExamenFinal
             if (dashboardExistente != null)
             {
                 dashboardExistente.BringToFront();
-                dashboardExistente.Focus();
+                dashboardExistente.Focus();                                                                             
 
             }
             else
@@ -89,11 +103,11 @@ namespace ExamenFinal
             this.Hide();
         }
 
-     
+
 
         private void Form1_Load(object sender, EventArgs e)
         {
-           
+
 
         }
 

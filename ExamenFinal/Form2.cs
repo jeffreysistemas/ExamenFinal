@@ -47,14 +47,6 @@ namespace ExamenFinal
 
 
 
-
-
-
-
-
-
-
-
         public void AbrirFormularioEnPanel<T>() where T : Form, new()
         {
             Form formExistente = panelContenedor.Controls.OfType<T>().FirstOrDefault();

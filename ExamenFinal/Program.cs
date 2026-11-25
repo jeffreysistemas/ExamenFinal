@@ -6,6 +6,21 @@ using System.Windows.Forms;
 
 namespace ExamenFinal
 {
+    public struct Expediente
+    {
+        public string codigo;
+        public string ciudadano;
+        public int dni;
+        public string tipoTramite;
+        public string direccion;
+        public string descripcion;
+        public string fecha;
+        public string estado;
+        public bool esUrgente;
+
+
+    }
+
     internal static class Program
     {
         /// <summary>
